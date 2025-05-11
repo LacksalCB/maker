@@ -1,7 +1,7 @@
 CC = gcc
 
 SRC_DIR = src
-LOG_DIR = logs
+LIB_DIR = lib
 BUILD_DIR = build
 BIN_DIR = bin
 
@@ -24,9 +24,11 @@ $(EXEC): $(OBJECTS)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c 
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+install:
+	cp $(EXEC) /usr/local/bin/
+	mkdir -p /usr/local/lib/templates/maker_templates && cp -r templates /usr/local/lib/templates/maker_templates
 
 clean:
 	-rm $(EXEC)
 	-rm $(OBJECTS)
-	-rm $(LOGS)
 

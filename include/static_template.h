@@ -1,0 +1,6 @@
+#ifndef STATIC_TEMPLATE_H
+#define STATIC_TEMPLATE_H
+
+
+
+#endif /* STATIC_TEMPLATE_H */
