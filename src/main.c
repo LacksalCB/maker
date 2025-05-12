@@ -9,10 +9,15 @@ int main(){
 	unsigned short choice;
 	scanf("%hu", &choice);
 
+	while (choice > 2) {
+		puts("Please select a valid option.  (1 or 2)");
+		scanf("%hu", &choice);
+	}
+
 	if (choice == 1) {
-		// pick template
+		select_template();
 	} else if (choice == 2) {
-		// create template
+		generate_template();
 	}
 
     return 0;
