@@ -4,6 +4,7 @@ SRC_DIR = src
 LIB_DIR = lib
 BUILD_DIR = build
 BIN_DIR = bin
+INCUDE_DIR = include
 
 EXEC = $(BIN_DIR)/maker
 LOGS = $(wildcard $(LOG_DIR)/*.txt)

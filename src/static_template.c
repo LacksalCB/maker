@@ -1,15 +1,11 @@
+#include "../include/templates.h"
+
 #include "../include/static_template.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-char* static_file_paths[] = {
-	"c_exec.txt",
-	"c_static_lib.txt",
-	"c_dyn_lib.txt"
-};
 
 void write_makefile(char* makefile, long fsize) {
 	FILE* fptr;
@@ -36,7 +32,7 @@ void write_makefile(char* makefile, long fsize) {
 void load_template(int template_num) {
 	FILE* fptr;
 	char filename[256];	
-	sprintf(filename, "%s/.local/share/maker/templates/%s", getenv("HOME"), static_file_paths[template_num]);
+	sprintf(filename, "%s/.local/share/maker/templates/%s", getenv("HOME"), templates.template_names[template_num]);
 	fptr = fopen(filename, "r");
 
 	fseek(fptr, 0, SEEK_END);
@@ -63,13 +59,13 @@ void select_template() {
 	scanf(" %hu", &template_style);
 	switch (template_style) {
 		case 1: 
-			load_template(C_EXEC);
+			load_template(0);
 			break;
 		case 2:
-			load_template(C_STATIC_LIB);
+			load_template(1);
 			break;
 		case 3:
-			load_template(C_DYN_LIB);
+			load_template(2);
 			break;
 		default:
 			puts("Invalid option.");

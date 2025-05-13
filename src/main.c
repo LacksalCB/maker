@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-#include "../include/template.h"
+#include "../include/templates.h"
+#include "../include/static_template.h"
+#include "../include/dynamic_template.h"
 
 int main(){
    	puts("Would you like to use a template or generate a custom Makefile?");
@@ -14,11 +16,12 @@ int main(){
 		scanf("%hu", &choice);
 	}
 
+	init_templates(&templates);
 	if (choice == 1) {
 		select_template();
 	} else if (choice == 2) {
 		generate_template();
 	}
-
+	destroy_templates(&templates);
     return 0;
 }
