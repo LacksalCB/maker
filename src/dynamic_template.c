@@ -51,6 +51,12 @@ void generate_template() {
  	set_compiler(&makefile, language);
 	puts(makefile);
 
+	char* files_structure;
+	char* flags;
+	char* output_format;
+	char* clean_targets;
+	char* all_targets;
+
 	free(language);
 	free(makefile);
 }
