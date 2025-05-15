@@ -24,7 +24,7 @@ void add_template(maker_template_t* templates, char* str) {
 	templates->template_count += 1;
 }
 
-void remove_template() {
+void remove_template(  ) {
 	
 }
 

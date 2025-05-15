@@ -16,6 +16,7 @@ int main(){
 		scanf("%hu", &choice);
 	}
 
+	while (getchar() != '\n');
 	init_templates(&templates);
 	if (choice == 1) {
 		select_template();

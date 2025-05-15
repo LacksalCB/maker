@@ -1,5 +1,4 @@
 #include "../include/templates.h"
-
 #include "../include/static_template.h"
 
 #include <stdio.h>
@@ -21,18 +20,24 @@ void write_makefile(char* makefile, long fsize) {
 		} else {
 			puts(makefile);	
 		}
-	} else {
-		puts("Creating Makefile...");
-		fptr = fopen("thing.txt", "w");
-		fwrite(makefile, sizeof(char), fsize, fptr);
-		fclose(fptr);	
-	}
+		return;
+	} 
+
+	puts("Creating Makefile...");
+	fptr = fopen("thing.txt", "w");
+	fwrite(makefile, sizeof(char), fsize, fptr);
+	fclose(fptr);	
 }
 
 void load_template(int template_num) {
 	FILE* fptr;
 	char filename[256];	
-	sprintf(filename, "%s/.local/share/maker/templates/%s", getenv("HOME"), templates.template_names[template_num]);
+	sprintf(
+		filename, 
+		"%s/.local/share/maker/templates/%s", 
+		getenv("HOME"), 
+		templates.template_names[template_num]
+	);
 	fptr = fopen(filename, "r");
 
 	fseek(fptr, 0, SEEK_END);
@@ -50,10 +55,10 @@ void load_template(int template_num) {
 
 void select_template() {
 	puts("Please select a template:");
-	
-	puts("1) C Executable");
-	puts("2) C Static Library");
-	puts("2) C Dynamic Library");
+
+	for (int i = 0; i < templates.template_count; i++) {
+		printf("%d) %s\n", i+1, templates.template_names[i]);	
+	}
 
 	unsigned short template_style;
 	scanf(" %hu", &template_style);
