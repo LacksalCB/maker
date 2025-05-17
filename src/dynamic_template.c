@@ -1,4 +1,5 @@
 #include "../include/templates.h"
+#include "../include/makefiles.h"
 #include "../include/dynamic_template.h"
 
 #include <stdio.h>
@@ -34,29 +35,38 @@ char* prompt_language() {
 	return language;
 }
 
-void set_compiler(char** makefile, char* language) {
-	if (strcmp("C", language)) {	
-		strncpy(*makefile, "CC = GPP", 9);
+char* prompt_file_structure() {
+	return "placeholder";	
+}
+
+void set_language(makefile_t* makefile) {
+	
+	if (strcmp("C", makefile->language)) {	
+		strncpy(makefile->contents, "CC = GCC\n", 10);
 	}	
-	if (strcmp("C++", language)) {
-		strncpy(*makefile, "CC = GPP", 9);
+	if (strcmp("C++", makefile->language)) {
+		strncpy(makefile->contents, "CC = GPP\n", 10);
 	}
 }
 
+void set_file_structure(makefile_t* makefile) {
+		
+} 
+
+void dealloc() {
+	
+}
+
 void generate_template() {
-	char* makefile = malloc(sizeof(char) * 4096);
+	makefile_t* makefile = malloc(sizeof(struct MAKEFILE_STRUCT) * 1);
+	makefile->contents = malloc(sizeof(char) * 4096);
 
-	char* language = prompt_language();
+	makefile->language = prompt_language();
 
- 	set_compiler(&makefile, language);
-	puts(makefile);
+ 	set_language(makefile);
 
-	char* files_structure;
-	char* flags;
-	char* output_format;
-	char* clean_targets;
-	char* all_targets;
+	
+	puts(makefile->contents);
 
-	free(language);
 	free(makefile);
 }
