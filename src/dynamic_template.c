@@ -5,12 +5,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define LINE_LEN 32
 
 const char* supported_languages = "C/C++";
 
-char* prompt_language() {
+void prompt_language(makefile_t* makefile) {
 	char* language_prompt = NULL;
 	size_t line_len = LINE_LEN;
 	ssize_t buf;
@@ -21,7 +22,7 @@ char* prompt_language() {
 		buf = getline(&language_prompt, &line_len, stdin);
 		if (buf == -1) {
 			fprintf(stderr, "Error reading input\n");
-			return 0;
+			return;
 		}
 
 		if (buf > 0 && language_prompt[buf-1] == '\n') {
@@ -34,10 +35,10 @@ char* prompt_language() {
 
 		puts("Please enter a language from the supported language list.");
 	}
-	return language_prompt;
+	makefile->language = language_prompt;
 }
 
-char** prompt_file_structure() {
+void prompt_file_structure(makefile_t* makefile) {
 	puts("\nWhat is your intended file structure? (simple single dir project, or multiple dirs like src, include etc)\n1) Simple\n2) Custom\n");
 
 	int fs_option = 0;
@@ -51,7 +52,7 @@ char** prompt_file_structure() {
 
 		if (buf == EOF) {
 			fprintf(stderr, "Error reading input\n");
-			return 0;
+			return;
 		}
 
 		if (fs_option == 1) {	
@@ -68,7 +69,7 @@ char** prompt_file_structure() {
 				ssize_t buf = getline(&file, &line_len, stdin);
 				if (buf == -1) {
 					fprintf(stderr, "Error reading input\n");
-					return 0;
+					return;
 				}
 
 				if (buf > 0 && file[buf-1] == '\n') {
@@ -84,29 +85,51 @@ char** prompt_file_structure() {
 	}
 
 	free(file);
-	return fs_prompt;	
+	makefile->file_structure = fs_prompt;	
+	makefile->file_count = file_count;
 }
 
 void set_language(makefile_t* makefile) {	
 	if (strcmp("C", makefile->language)) {	
-		strncpy(makefile->contents, "CC = GCC\n", 10);
+		strncpy(makefile->contents, "CC = GCC\n\n", 11);
 	}	
 	if (strcmp("C++", makefile->language)) {
-		strncpy(makefile->contents, "CC = GPP\n", 10);
+		strncpy(makefile->contents, "CC = GPP\n\n", 11);
 	}
 }
 
+char* str_toupper(char* str) {
+	char* s = malloc(sizeof(char) * (strlen(str) + 1));
+
+	for (int i = 0; i < (int)strlen(str); i++) {
+		s[i] = toupper(str[i]);	
+	}
+
+	s[strlen(str)] = 0;
+	puts(s);
+	return s;
+}
+
 void set_file_structure(makefile_t* makefile) {
-		
+	const char* file_decl_skeleton = "_DIR = ";	
+
+	// Explore why 0 index prints nothing to contents.  
+	for (int i = 1; i <= makefile->file_count; i++) {
+		char* makefile_file_name = str_toupper(makefile->file_structure[i]);
+		char file_decl[128];
+		sprintf(file_decl, "%s%s%s\n", makefile_file_name, file_decl_skeleton, makefile->file_structure[i]);
+		strcat(makefile->contents, file_decl);
+		free(makefile_file_name);
+	}
 } 
 
 void dealloc_makefile(makefile_t* makefile) {
 	free(makefile->contents);
 	free(makefile->language);	
-	for (int i = 0; i <= 2; i++) { // do this better
-		free(makefile->dir_structure[i]);	
+	for (int i = 0; i <= makefile->file_count; i++) {
+		free(makefile->file_structure[i]);	
 	}
-	free(makefile->dir_structure);
+	free(makefile->file_structure);
 /*
 	free(makefile->output_format);
 	free(makefile->flags);
@@ -122,10 +145,10 @@ void generate_template() {
 	makefile_t* makefile = malloc(sizeof(struct MAKEFILE_STRUCT) * 1);
 	makefile->contents = malloc(sizeof(char) * 4096);
 
-	makefile->language = prompt_language();
+	prompt_language(makefile);
  	set_language(makefile);
 
-	makefile->dir_structure = prompt_file_structure();
+	prompt_file_structure(makefile);
 	set_file_structure(makefile);
 
 	

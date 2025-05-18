@@ -5,14 +5,14 @@
 
 extern const char* supported_languages;
 
-char* prompt_language();
-char** prompt_dir_structure();
-char* prompt_output_format();
-char* prompt_flags();
-char* prompt_all_targets();
-char* prompt_install();
-char* prompt_clean_targets();
-char* prompt_misc();
+void prompt_language(makefile_t* makefile);
+void prompt_dir_structure(makefile_t* makefile);
+void prompt_output_format(makefile_t* makefile);
+void prompt_flags(makefile_t* makefile);
+void prompt_all_targets(makefile_t* makefile);
+void prompt_install(makefile_t* makefile);
+void prompt_clean_targets(makefile_t* makefile);
+void prompt_misc(makefile_t* makefile);
 
 void set_language(makefile_t* makefile);
 void set_dir_structure(makefile_t* makefile);

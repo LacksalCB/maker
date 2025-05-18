@@ -6,8 +6,8 @@
 typedef struct MAKEFILE_STRUCT {
 	char* contents;
 	char* language;
-	char** dir_structure;
-	int dir_count;
+	char** file_structure;
+	int file_count;
 	char* output_format;
 	char* flags;
 	char* all_targets;
