@@ -1,10 +1,13 @@
 #ifndef MAKEFILES_H
 #define MAKEFILES_H
 
+
+// add enums and stuff for presets
 typedef struct MAKEFILE_STRUCT {
 	char* contents;
 	char* language;
-	char* file_structure;
+	char** dir_structure;
+	int dir_count;
 	char* output_format;
 	char* flags;
 	char* all_targets;
