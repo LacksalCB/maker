@@ -14,19 +14,20 @@ void write_makefile(char* makefile, long fsize) {
 		scanf(" %c", &overwrite_query);
 
 		if (overwrite_query == 'y') {
-			fptr = fopen("thing.txt", "w");
+			puts("Creating \'Makefile\'...");
+			fptr = fopen("Makefile", "w");
 			fwrite(makefile, sizeof(char), fsize, fptr);
 			fclose(fptr);	
 		} else {
 			puts(makefile);	
 		}
 		return;
-	} 
+	}
 
-	puts("Creating Makefile...");
-	fptr = fopen("thing.txt", "w");
+	puts("Creating \'Makefile\'...");
+	fptr = fopen("Makefile", "w");
 	fwrite(makefile, sizeof(char), fsize, fptr);
-	fclose(fptr);	
+	fclose(fptr);
 }
 
 void load_template(int template_num) {

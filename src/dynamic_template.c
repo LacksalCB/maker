@@ -121,7 +121,11 @@ void set_file_structure(makefile_t* makefile) {
 		strcat(makefile->contents, file_decl);
 		free(makefile_file_name);
 	}
-} 
+}
+
+void set_output_format(makefile_t* makefile) {
+
+}
 
 void dealloc_makefile(makefile_t* makefile) {
 	free(makefile->contents);

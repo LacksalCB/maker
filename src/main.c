@@ -4,6 +4,13 @@
 #include "../include/static_template.h"
 #include "../include/dynamic_template.h"
 
+/*
+FLAGS
+-s [X]  X being some int 0-9 to select a static template 
+-d 		dynamic generation based on user inputs or other flags
+
+*/
+
 int main(){
    	puts("Would you like to use a template or generate a custom Makefile?");
 	puts("1) Template\n2) Custom");
